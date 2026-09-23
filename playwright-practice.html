@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playwright Automation Practice Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background:#f4f6f8; color:#222; }
+    header { background:#1f4e78; color:white; padding:20px; }
+    nav a { color:white; margin-right:18px; text-decoration:none; }
+    main { max-width:1100px; margin:20px auto; padding:0 15px; }
+    section { background:white; margin:18px 0; padding:20px; border-radius:8px; box-shadow:0 1px 5px #ccc; }
+    h2 { color:#1f4e78; }
+    label { display:block; margin-top:10px; font-weight:bold; }
+    input, select, textarea, button { padding:9px; margin-top:5px; }
+    input, select, textarea { width:95%; max-width:500px; }
+    button { cursor:pointer; margin-right:8px; }
+    .inline label { display:inline-block; margin-right:20px; font-weight:normal; }
+    table { width:100%; border-collapse:collapse; margin-top:10px; }
+    th,td { border:1px solid #ccc; padding:10px; text-align:left; }
+    th { background:#e8eef5; }
+    .card { display:inline-block; width:28%; min-width:200px; margin:8px; padding:15px; border:1px solid #ddd; }
+    .hidden { display:none; }
+    .success { color:green; font-weight:bold; }
+    .error { color:red; }
+    .dropzone { border:2px dashed #777; padding:30px; text-align:center; margin-top:10px; }
+    .tabs button.active { background:#1f4e78; color:white; }
+    .tab-content { padding:15px; border:1px solid #ccc; }
+    dialog { padding:25px; border:0; border-radius:8px; box-shadow:0 3px 20px #555; }
+    .tooltip { position:relative; display:inline-block; }
+    .tooltip span { visibility:hidden; position:absolute; background:#222;color:white;padding:7px;border-radius:4px; bottom:130%; left:0; white-space:nowrap; }
+    .tooltip:hover span { visibility:visible; }
+  </style>
+</head>
+
+<body>
+<header>
+  <h1 id="page-title">Playwright Automation Practice Page</h1>
+  <nav aria-label="Main Navigation">
+    <a href="#forms" data-testid="nav-forms">Forms</a>
+    <a href="#tables">Tables</a>
+    <a href="#widgets">Widgets</a>
+    <a href="#dynamic">Dynamic</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="basic-elements">
+  <h2>1. Basic Elements & Locators</h2>
+  <p id="welcome-message">Welcome to the Playwright practice page.</p>
+  <a id="external-link" href="https://playwright.dev/" target="_blank">Playwright Official Website</a>
+  <br><br>
+  <button id="basic-button" type="button" onclick="document.getElementById('button-result').textContent='Button clicked successfully!'">
+    Click Me
+  </button>
+  <span id="button-result"></span>
+  <br><br>
+  <img src="https://via.placeholder.com/120" alt="Practice Image" id="practice-image">
+</section>
+
+<section id="forms">
+  <h2>2. Form Elements</h2>
+  <form id="registration-form" onsubmit="submitRegistration(event)">
+    <label for="full-name">Full Name</label>
+    <input id="full-name" name="fullName" type="text" placeholder="Enter full name" required>
+
+    <label for="email">Email</label>
+    <input id="email" name="email" type="email" placeholder="Enter email" required>
+
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" placeholder="Enter password">
+
+    <label for="age">Age</label>
+    <input id="age" name="age" type="number" min="18" max="100">
+
+    <label for="dob">Date of Birth</label>
+    <input id="dob" name="dob" type="date">
+
+    <label for="appointment">Appointment Date & Time</label>
+    <input id="appointment" type="datetime-local">
+
+    <label for="color">Favorite Color</label>
+    <input id="color" type="color" value="#1f4e78">
+
+    <label for="website">Website</label>
+    <input id="website" type="url" placeholder="https://example.com">
+
+    <label for="search">Search</label>
+    <input id="search" type="search" placeholder="Search here">
+
+    <label for="country">Country</label>
+    <select id="country" name="country">
+      <option value="">-- Select Country --</option>
+      <option value="india">India</option>
+      <option value="usa">USA</option>
+      <option value="uk">UK</option>
+      <option value="canada">Canada</option>
+    </select>
+
+    <label for="skills">Skills</label>
+    <select id="skills" multiple size="4">
+      <option value="selenium">Selenium</option>
+      <option value="playwright">Playwright</option>
+      <option value="csharp">C#</option>
+      <option value="java">Java</option>
+      <option value="python">Python</option>
+    </select>
+
+    <label>Gender</label>
+    <div class="inline">
+      <label><input type="radio" name="gender" value="male"> Male</label>
+      <label><input type="radio" name="gender" value="female"> Female</label>
+      <label><input type="radio" name="gender" value="other"> Other</label>
+    </div>
+
+    <label>Testing Skills</label>
+    <div class="inline">
+      <label><input type="checkbox" name="testing" value="manual"> Manual Testing</label>
+      <label><input type="checkbox" name="testing" value="automation"> Automation</label>
+      <label><input type="checkbox" name="testing" value="api"> API Testing</label>
+    </div>
+
+    <label for="experience">Experience: <span id="experience-value">5</span> years</label>
+    <input id="experience" type="range" min="0" max="20" value="5"
+           oninput="document.getElementById('experience-value').textContent=this.value">
+
+    <label for="comments">Comments</label>
+    <textarea id="comments" rows="4" placeholder="Enter your comments"></textarea>
+
+    <label for="resume">Upload Resume</label>
+    <input id="resume" type="file" accept=".pdf,.doc,.docx">
+
+    <br><br>
+    <button id="submit-registration" type="submit">Submit Registration</button>
+    <button id="reset-form" type="reset">Reset</button>
+    <p id="form-result"></p>
+  </form>
+</section>
+
+<section id="tables">
+  <h2>3. Web Table</h2>
+  <table id="employee-table">
+    <thead>
+      <tr><th>ID</th><th>Name</th><th>Role</th><th>Experience</th><th>Status</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>101</td><td>Rahul Sharma</td><td>QA Engineer</td><td>5</td><td>Active</td><td><button onclick="showRow(this)">View</button></td></tr>
+      <tr><td>102</td><td>Priya Patil</td><td>Automation Engineer</td><td>7</td><td>Active</td><td><button onclick="showRow(this)">View</button></td></tr>
+      <tr><td>103</td><td>Amit Joshi</td><td>Developer</td><td>4</td><td>Inactive</td><td><button onclick="showRow(this)">View</button></td></tr>
+      <tr><td>104</td><td>Neha Singh</td><td>QA Lead</td><td>10</td><td>Active</td><td><button onclick="showRow(this)">View</button></td></tr>
+    </tbody>
+  </table>
+  <p id="row-result"></p>
+</section>
+
+<section id="widgets">
+  <h2>4. Tabs, Tooltip & Modal</h2>
+
+  <div class="tabs">
+    <button class="tab-button active" onclick="openTab('tab1',this)">Overview</button>
+    <button class="tab-button" onclick="openTab('tab2',this)">Automation</button>
+    <button class="tab-button" onclick="openTab('tab3',this)">API</button>
+  </div>
+
+  <div id="tab1" class="tab-content">Overview content is displayed.</div>
+  <div id="tab2" class="tab-content hidden">Selenium, Playwright and Cypress automation content.</div>
+  <div id="tab3" class="tab-content hidden">REST API and API automation content.</div>
+
+  <br>
+  <div class="tooltip">
+    Hover over me
+    <span role="tooltip">This is a Playwright tooltip</span>
+  </div>
+
+  <br><br>
+  <button id="open-dialog" onclick="document.getElementById('practice-dialog').showModal()">Open Modal</button>
+
+  <dialog id="practice-dialog">
+    <h3>Practice Modal</h3>
+    <p id="dialog-message">This is a native HTML dialog.</p>
+    <button id="close-dialog" onclick="document.getElementById('practice-dialog').close()">Close</button>
+  </dialog>
+</section>
+
+<section id="alerts">
+  <h2>5. JavaScript Dialogs</h2>
+  <button id="alert-button" onclick="alert('This is an alert message')">Alert</button>
+  <button id="confirm-button" onclick="confirm('Do you want to continue?')">Confirm</button>
+  <button id="prompt-button" onclick="prompt('Enter your name:')">Prompt</button>
+</section>
+
+<section id="dynamic">
+  <h2>6. Dynamic Content & Waits</h2>
+  <button id="load-data" onclick="loadDynamicData()">Load Data After 2 Seconds</button>
+  <p id="dynamic-result">No data loaded yet.</p>
+
+  <button id="toggle-button" onclick="toggleElement()">Show/Hide Element</button>
+  <p id="toggle-element" class="hidden">This element can be dynamically hidden or shown.</p>
+</section>
+
+<section id="drag-drop">
+  <h2>7. Drag & Drop</h2>
+  <div id="drag-source" draggable="true"
+       style="display:inline-block;padding:20px;background:#ddd;border:1px solid #999;">
+    Drag Me
+  </div>
+  <div id="drop-target" class="dropzone">Drop Here</div>
+  <p id="drop-result"></p>
+</section>
+
+<section id="iframe-section">
+  <h2>8. Iframe</h2>
+  <iframe id="practice-frame" title="Practice Iframe"
+          style="width:100%;height:150px;border:1px solid #aaa;"
+          srcdoc="<html><body style='font-family:Arial'><h3 id='frame-title'>Inside Iframe</h3><input id='frame-input' placeholder='Iframe input'><button id='frame-button' onclick='document.getElementById(&quot;frame-result&quot;).textContent=&quot;Iframe button clicked&quot;'>Click Frame Button</button><p id='frame-result'></p></body></html>">
+  </iframe>
+</section>
+
+<section id="keyboard">
+  <h2>9. Keyboard & Mouse Practice</h2>
+  <input id="keyboard-input" placeholder="Try keyboard actions">
+  <button id="double-click-button" ondblclick="document.getElementById('double-click-result').textContent='Double-click detected!'">
+    Double Click Me
+  </button>
+  <p id="double-click-result"></p>
+</section>
+
+<section id="accessibility">
+  <h2>10. Accessibility & Locator Practice</h2>
+  <button aria-label="Save User Information" id="save-user">Save</button>
+  <button data-testid="delete-user">Delete</button>
+  <div role="status" id="status-message">Ready</div>
+  <input aria-label="Accessible Search Box" id="accessible-search">
+</section>
+
+<section id="cards">
+  <h2>11. Repeated Elements</h2>
+  <div class="card" data-product="laptop">
+    <h3>Automation Laptop</h3>
+    <p>Price: ₹65,000</p>
+    <button class="buy-button">Buy Now</button>
+  </div>
+  <div class="card" data-product="monitor">
+    <h3>QA Monitor</h3>
+    <p>Price: ₹18,000</p>
+    <button class="buy-button">Buy Now</button>
+  </div>
+  <div class="card" data-product="keyboard">
+    <h3>Mechanical Keyboard</h3>
+    <p>Price: ₹4,000</p>
+    <button class="buy-button">Buy Now</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+function submitRegistration(e) {
+  e.preventDefault();
+  document.getElementById('form-result').textContent = 'Registration submitted successfully!';
+  document.getElementById('form-result').className = 'success';
+}
+
+function showRow(button) {
+  const row = button.closest('tr');
+  const cells = row.querySelectorAll('td');
+  document.getElementById('row-result').textContent =
+    'Selected employee: ' + cells[1].textContent + ' (' + cells[2].textContent + ')';
+}
+
+function openTab(id, button) {
+  document.querySelectorAll('.tab-content').forEach(x => x.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+  document.querySelectorAll('.tab-button').forEach(x => x.classList.remove('active'));
+  button.classList.add('active');
+}
+
+function loadDynamicData() {
+  document.getElementById('dynamic-result').textContent = 'Loading...';
+  setTimeout(() => {
+    document.getElementById('dynamic-result').textContent = 'Dynamic data loaded successfully!';
+  }, 2000);
+}
+
+function toggleElement() {
+  document.getElementById('toggle-element').classList.toggle('hidden');
+}
+
+document.getElementById('drag-source').addEventListener('dragstart', e => {
+  e.dataTransfer.setData('text/plain', 'drag-source');
+});
+
+document.getElementById('drop-target').addEventListener('dragover', e => e.preventDefault());
+
+document.getElementById('drop-target').addEventListener('drop', e => {
+  e.preventDefault();
+  document.getElementById('drop-result').textContent = 'Drag and drop completed successfully!';
+});
+
+document.querySelectorAll('.buy-button').forEach(button => {
+  button.addEventListener('click', () => {
+    button.textContent = 'Added to Cart';
+    button.setAttribute('data-added', 'true');
+  });
+});
+
+document.getElementById('save-user').addEventListener('click', () => {
+  document.getElementById('status-message').textContent = 'User information saved.';
+});
+</script>
+
+</body>
+</html>
